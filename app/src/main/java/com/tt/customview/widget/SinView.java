@@ -98,7 +98,7 @@ public class SinView extends View {
     int speed = 5;
 
     int xOffset2 = 0;
-    int speed2 = 10;
+    int speed2 = 9;
     int a = 20;
     float[] yArr;
 
@@ -150,10 +150,14 @@ public class SinView extends View {
         if(xOffset2>=getWidth())
             xOffset2 = 0;
 
-        invalidate();
+        //invalidate();
 
     }
 
-
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        System.out.println("-onlayout------------");
+        super.onLayout(changed, left, top, right, bottom);
+    }
 }
 

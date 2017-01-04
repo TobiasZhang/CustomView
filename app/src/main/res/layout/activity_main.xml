@@ -25,4 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         hehe:titleColor="@color/colorPrimary"/>
+    <com.tt.customview.widget.CustomProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 </LinearLayout>
