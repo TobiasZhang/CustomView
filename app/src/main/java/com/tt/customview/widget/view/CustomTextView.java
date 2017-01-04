@@ -1,4 +1,4 @@
-package com.tt.customview.widget;
+package com.tt.customview.widget.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;

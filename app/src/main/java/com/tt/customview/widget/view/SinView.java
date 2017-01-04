@@ -1,4 +1,4 @@
-package com.tt.customview.widget;
+package com.tt.customview.widget.view;
 
 /**
  * Created by TT on 2017/1/4.
@@ -61,6 +61,29 @@ public class SinView extends View {
         mPaint = new Paint();
         mPaint.setColor(Color.parseColor("#6699ff"));
         mPaint.setAntiAlias(true);
+
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    xOffset+=speed;
+                    if(xOffset>=getWidth())
+                        xOffset = 0;
+
+
+                    xOffset2+=speed2;
+                    if(xOffset2>=getWidth())
+                        xOffset2 = 0;
+
+                    postInvalidate();
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();*/
     }
 
     @Override
@@ -110,7 +133,6 @@ public class SinView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        System.out.println("--ondraw--");
 
         // 将周期定为view总宽度
         float mCycleFactorW = (float) (2 * Math.PI / waveWidth);
@@ -150,7 +172,7 @@ public class SinView extends View {
         if(xOffset2>=getWidth())
             xOffset2 = 0;
 
-        //invalidate();
+        postInvalidate();
 
     }
 
