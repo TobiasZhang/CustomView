@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -102,7 +103,7 @@ public class SinView extends View {
     int speed = 5;
 
     int xOffset2 = 0;
-    int speed2 = 9;
+    int speed2 = 29;
     int a = 20;
     float[] yArr;
 
@@ -153,14 +154,18 @@ public class SinView extends View {
 // 将周期定为view总宽度
         float mCycleFactorW = (float) (2 * Math.PI / waveWidth);
 
-        mPaint.setColor(waveColor);
-
         for(int x = 0; x < getWidth(); x++){
             int trueX = x + xOffset;
             if(trueX >= yArr.length)
                 trueX -= yArr.length;
             System.out.println(trueX+"----trueX------"+yArr[trueX]);
             canvas.drawLine(x,yArr[trueX],x,getHeight(),mPaint);
+
+
+            int trueX2 = x + xOffset2;
+            if(trueX2 >= yArr.length)
+                trueX2 -= yArr.length;
+            canvas.drawLine(x,yArr[trueX2],x,getHeight(),mPaint);
         }
 
 
