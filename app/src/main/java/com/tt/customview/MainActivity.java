@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView getTv(String str){
         TextView txt = new TextView(this);
-        txt.setPadding(40,10,40,10);
+        txt.setPadding(40,10,80,10);
         txt.setTextColor(Color.parseColor("#6699ff"));
         txt.setBackgroundResource(R.drawable.shape);
         ViewGroup.MarginLayoutParams mlp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);

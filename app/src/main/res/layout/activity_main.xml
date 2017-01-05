@@ -21,10 +21,10 @@
         hehe:titleSize="20dp"
         android:padding="5dp"
         />-->
-    <com.tt.customview.widget.view.SinView
+    <!--<com.tt.customview.widget.view.SinView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        hehe:titleColor="@color/colorPrimary"/>
+        hehe:titleColor="@color/colorPrimary"/>-->
     <!--<com.tt.customview.widget.view.CustomProgressBar
         android:layout_width="100dp"
         android:layout_height="100dp" />-->
@@ -75,4 +75,23 @@
             android:textStyle="bold" />
 
     </com.tt.customview.widget.viewgroup.CustomViewGroup>-->
+    <com.tt.customview.widget.viewgroup.FlowLayout
+        android:id="@+id/flowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--<TextView
+            android:text="123"
+            style="@style/myTxt"
+            android:padding="5dp"/>
+        <TextView
+            android:text="abddd"
+            style="@style/myTxt"/>-->
+        <!--<TextView
+            android:text="牛逼额和"
+            style="@style/myTxt"
+            android:padding="15dp"/>-->
+    </com.tt.customview.widget.viewgroup.FlowLayout>
+    <com.tt.customview.widget.view.VolumBar
+        android:layout_width="150dp"
+        android:layout_height="150dp"/>
 </LinearLayout>
