@@ -29,6 +29,7 @@ import android.view.View;
 import com.tt.customview.R;
 
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Created by TT on 2017/1/4.
@@ -61,34 +62,14 @@ public class SinView extends View {
         mPaint = new Paint();
         mPaint.setColor(Color.parseColor("#6699ff"));
         mPaint.setAntiAlias(true);
+        System.out.println(getWidth()+"----构造 getwidth-----");
 
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true){
-                    xOffset+=speed;
-                    if(xOffset>=getWidth())
-                        xOffset = 0;
-
-
-                    xOffset2+=speed2;
-                    if(xOffset2>=getWidth())
-                        xOffset2 = 0;
-
-                    postInvalidate();
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();*/
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         System.out.println("--onMeasure--");
+        System.out.println(getWidth()+"----onMeasure getwidth-----");
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -127,52 +108,76 @@ public class SinView extends View {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        yArr = new float[getWidth()];
+
         System.out.println(w+"--onSizeChanged--"+h);
+        yArr = new float[getWidth()];
+        // 将周期定为view总宽度
+        float mCycleFactorW = (float) (2 * Math.PI / waveWidth);
+        for(int x = 0; x < getWidth(); x++){
+//            int y=Asin(ωx+φ)+k
+            float y = (float) (a * Math.sin(mCycleFactorW * x)+getHeight()/2);
+            yArr[x] = y;
+        }
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    postInvalidate();
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    xOffset+=speed;
+                    if(xOffset>=getWidth())
+                        xOffset = 0;
+
+
+                    xOffset2+=speed2;
+                    if(xOffset2>=getWidth())
+                        xOffset2 = 0;
+
+
+                }
+            }
+        }).start();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        System.out.println("---onDraw---------------");
 
-        // 将周期定为view总宽度
+
+// 将周期定为view总宽度
         float mCycleFactorW = (float) (2 * Math.PI / waveWidth);
 
         mPaint.setColor(waveColor);
 
         for(int x = 0; x < getWidth(); x++){
-//            int y=Asin(ωx+φ)+k
-
-            /*if(yArr[x]==0){
-                int trueX = x + xOffset;
-
-                float y = (float) (a * Math.sin(mCycleFactorW * trueX)+getHeight()/2);
-                yArr[x] = y;
-
-            }*/
             int trueX = x + xOffset;
+            if(trueX >= yArr.length)
+                trueX -= yArr.length;
+            System.out.println(trueX+"----trueX------"+yArr[trueX]);
+            canvas.drawLine(x,yArr[trueX],x,getHeight(),mPaint);
+        }
+
+
+
+
+
+           /* int trueX = x + xOffset;
             float y = (float) (a * Math.sin(mCycleFactorW * trueX)+getHeight()/2);
-            //System.out.println(x+"---x---y---"+yArr[x]);
-            canvas.drawLine(x,y,x,getHeight(),mPaint);
+            canvas.drawLine(x,y,x,getHeight(),mPaint);*/
 
 
-
-            int trueX2 = x + xOffset2;
+            /*int trueX2 = x + xOffset2;
             float y2 = (float) (a * Math.sin(mCycleFactorW * trueX2)+getHeight()/2);
             //System.out.println(x+"---x---y---"+yArr[x]);
-            canvas.drawLine(x,y2,x,getHeight(),mPaint);
+            canvas.drawLine(x,y2,x,getHeight(),mPaint);*/
 
 
-        }
-        xOffset+=speed;
-        if(xOffset>=getWidth())
-            xOffset = 0;
-
-
-        xOffset2+=speed2;
-        if(xOffset2>=getWidth())
-            xOffset2 = 0;
-
-        postInvalidate();
 
     }
 
@@ -180,6 +185,7 @@ public class SinView extends View {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         System.out.println("-onlayout------------");
         super.onLayout(changed, left, top, right, bottom);
+
     }
 }
 
