@@ -31,6 +31,8 @@ import com.tt.customview.R;
 
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by TT on 2017/1/4.
@@ -103,13 +105,17 @@ public class SinView extends View {
     int speed = 5;
 
     int xOffset2 = 0;
-    int speed2 = 29;
+    int speed2 = 9;
     int a = 20;
     float[] yArr;
 
+    Timer timer;
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-
+        if(timer!=null){
+            timer.cancel();
+            timer.purge();
+        }
         System.out.println(w+"--onSizeChanged--"+h);
         yArr = new float[getWidth()];
         // 将周期定为view总宽度
@@ -120,8 +126,22 @@ public class SinView extends View {
             yArr[x] = y;
         }
 
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                xOffset+=speed;
+                if(xOffset>=getWidth())
+                    xOffset = 0;
 
-        new Thread(new Runnable() {
+
+                xOffset2+=speed2;
+                if(xOffset2>=getWidth())
+                    xOffset2 = 0;
+                postInvalidate();
+            }
+        },0,16);
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true){
@@ -143,7 +163,7 @@ public class SinView extends View {
 
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     @Override
@@ -158,7 +178,7 @@ public class SinView extends View {
             int trueX = x + xOffset;
             if(trueX >= yArr.length)
                 trueX -= yArr.length;
-            System.out.println(trueX+"----trueX------"+yArr[trueX]);
+
             canvas.drawLine(x,yArr[trueX],x,getHeight(),mPaint);
 
 

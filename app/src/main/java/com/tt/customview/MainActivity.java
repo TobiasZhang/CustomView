@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        flowLayout = (FlowLayout) findViewById(R.id.flowLayout);
+        /*flowLayout = (FlowLayout) findViewById(R.id.flowLayout);
 
         flowLayout.addView(getTv("牛逼"));
         flowLayout.addView(getTv("呵呵"));
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         flowLayout.addView(getTv("打麻将"));
         flowLayout.addView(getTv("半岛铁匠"));
         flowLayout.addView(getTv("tt"));
-        flowLayout.addView(getTv("a"));
+        flowLayout.addView(getTv("a"));*/
 
     }
 
