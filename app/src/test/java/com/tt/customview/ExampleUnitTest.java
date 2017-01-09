@@ -1,5 +1,8 @@
 package com.tt.customview;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -11,5 +14,9 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+    }
+    @Test
+    public void test02(){
+//        BitmapFactory.decode
     }
 }
