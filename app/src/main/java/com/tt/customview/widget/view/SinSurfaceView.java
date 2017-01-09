@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -37,9 +38,6 @@ public class SinSurfaceView extends SurfaceView {
 
 
     private Paint mPaint;
-    private int waveColor;
-    private int waveWidth;
-    private int waveHeight;
 
     public SinSurfaceView(Context context) {
         this(context,null);
@@ -49,21 +47,15 @@ public class SinSurfaceView extends SurfaceView {
     }
     public SinSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.cc,defStyleAttr,0);
-        waveColor = typedArray.getColor(R.styleable.cc_titleColor, Color.BLACK);
-        typedArray.recycle();
         /**
          * 获得绘制文本的宽和高
          */
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-
         mPaint = new Paint();
         mPaint.setColor(Color.parseColor("#6699ff"));
         mPaint.setAntiAlias(true);
         System.out.println(getWidth()+"----构造 getwidth-----");
 
-
+        whitePaint.setColor(Color.WHITE);
 
 
         mHolder = getHolder();
@@ -73,33 +65,24 @@ public class SinSurfaceView extends SurfaceView {
                 // 开启线程
                 isRunning = true;
                 t = new Thread(new Runnable() {
-                    int xx = 1;
                     @Override
                     public void run() {
                         // 不断的进行draw
                         while (isRunning){
-                            try
-                            {
-                                // 获得canvas
+                            try{
+                            // 获得canvas
                                 mCanvas = mHolder.lockCanvas();
-                                if (mCanvas != null)
-                                {
+                                if (mCanvas != null){
                                     // drawSomething..
-//                                    drawSomething(mCanvas);
-                                    xx+=50;
-                                    mCanvas.drawLine(0,xx,20,getHeight(),mPaint);
+                                    drawSomething(mCanvas);
 
+                                    Thread.sleep(33);
                                 }
-                            } catch (Exception e){
+                            } catch (InterruptedException e){
                                 e.printStackTrace();
-                            } finally{
+                            }finally{
                                 if (mCanvas != null)
                                     mHolder.unlockCanvasAndPost(mCanvas);
-                            }
-                            try {
-                                Thread.sleep(60);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
                             }
                         }
                     }
@@ -132,7 +115,6 @@ public class SinSurfaceView extends SurfaceView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        System.out.println("--onMeasure--");
         System.out.println(getWidth()+"----onMeasure getwidth-----");
         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -140,40 +122,41 @@ public class SinSurfaceView extends SurfaceView {
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
-
-        waveWidth = widthSize;
-        waveHeight = heightSize;
-
-
     }
     int xOffset = 0;
-    int speed = 5;
+    int speed = 2;
 
     int xOffset2 = 0;
-    int speed2 = 9;
+    int speed2 = 3;
     int a = 20;
     float[] yArr;
 
+    float mCycleFactorW ;
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        yArr = new float[getWidth()];
+        yArr = new float[getMeasuredWidth()];
+
+        mCycleFactorW = (float) (2 * Math.PI / getWidth());
 
     }
 
-
-
+    Paint whitePaint = new Paint();
     private void drawSomething(Canvas canvas){
-        System.out.println("---onDraw---------------");
-
+        canvas.drawColor(Color.rgb(255,255, 255));
         // 将周期定为view总宽度
-        float mCycleFactorW = (float) (2 * Math.PI / 300);
+
 
         for(int x = 0; x < getWidth(); x++){
 //            int y=Asin(ωx+φ)+k
-            float y = (float) (a * Math.sin(mCycleFactorW * x + xOffset)+getHeight()/2);
-
-
+            float y = (float) (a * Math.sin(mCycleFactorW * x+ xOffset )+getHeight()/2);
             canvas.drawLine(x,y,x,getHeight(),mPaint);
+
+
+
+            float y2 = (float) (a * Math.sin(mCycleFactorW * x+ xOffset2 )+getHeight()/2);
+            canvas.drawLine(x,y2,x,getHeight(),mPaint);
+
         }
 
         xOffset+=speed;
@@ -186,10 +169,6 @@ public class SinSurfaceView extends SurfaceView {
             xOffset2 = 0;
 
 
-            /*int trueX2 = x + xOffset2;
-            if(trueX2 >= yArr.length)
-                trueX2 -= yArr.length;
-            canvas.drawLine(x,yArr[trueX2],x,getHeight(),mPaint);*/
     }
 }
 
